@@ -1,6 +1,16 @@
 var Panel = React.createClass({
+  loadAllServices: function() {
+    
+  },
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentDidMount: function() {
+    this.loadAllServices();
+    setInterval(this.loadAllServices, this.props.pollInterval);
+  },
   render: function() {
-    var panels = this.props.data.map(function (panel) {
+    var panels = this.state.data.map(function (panel) {
       var classString = 'panel';
       if (panel.success) {
         classString += ' panel-success';
@@ -36,9 +46,17 @@ var PanelHeader = React.createClass({
 
 var PanelBody = React.createClass({
 	render: function() {
+    var data = this.props.serviceData;
+    var items = [];
+    for(item in data) {
+      items.push(<li>{item}: {data[item]}</li>);
+    }
+    
 		return (
 			<div className="panel-body">
-        {this.props.serviceData}
+        <ul>
+          {items}
+        </ul>
       </div>
 		);
 	}
