@@ -4,6 +4,7 @@ var wishlistService = {
 	name: "Wishlist",
 	id: "wishlist",
 	request: function(callback) {
+		var me = this;
 		$.ajax({ url: "",
 				 dataType: "json",
 				 cache: false,
@@ -11,13 +12,12 @@ var wishlistService = {
 				 timeout: 5000
 				}).done(function(data, textStatus, jqXHR ) {
 					console.log("Success");
-					this.parse(data, callback);
+					me.parse(data, callback);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 					console.log("Error " + textStatus);
 					callback(false, errorThrown);
 				});
 	},
-	
 	parse: function(response, callback) {
 		
 	}

@@ -4,20 +4,20 @@ var productService = {
 	name: "Product",
 	id: "product",
 	request: function(callback) {
+		var me = this;
 		$.ajax({ url: "",
 				 dataType: "json",
-				 cache: false,
 				 crossDomain: true,
-				 timeout: 5000
+				 timeout: 5000,
+				 data: "",
 				}).done(function(data, textStatus, jqXHR ) {
-					console.log("Success");
-					this.parse(data, callback);
+					console.log("Success " + JSON.stringify(data));
+					me.parse(data, callback);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
-					console.log("Error " + textStatus);
+					console.log("Error");
 					callback(false, errorThrown);
 				});
 	},
-	
 	parse: function(response, callback) {
 		
 	}

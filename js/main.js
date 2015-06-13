@@ -1,71 +1,21 @@
 var AST = AST || {};
-
-function createPanelElement(service, data, result) {
-	//Create the panel 
-	var panel = document.createElement("div");
-	panel.classList.add("panel");
-	panel.classList.add("panel-"+ result);
+AST.data = {};
 	
-	//Create the heading
-	var heading = document.createElement("div");
-	heading.classList.add("panel-heading");
-	//Add the title
-	var title = document.createTextNode(service.name);
-	title.className = "panel-title";
-	heading.appendChild(title);
-	
-	//Create the body
-	var body = document.createElement("div");
-	body.classList.add("panel-body");
-	//Add all the elements 
-	var list = document.createElement('ul');
-	for (var key in data) {
-	   if (data.hasOwnProperty(key)) {
-   			var item = document.createElement('li');
-			var text = document.createTextNode(key + ": " + data[key]);
-	        item.appendChild(text);
-	        list.appendChild(item);
-	   }
-	}
-	body.appendChild(list);
-	
-	//Create the structure
-	panel.appendChild(heading);
-	panel.appendChild(body);
-}
-
-function createServiceContainers(success, data) {
-	var container = document.getElementById("content");
-	AST.manager.services.forEach(function(service) {
-	    console.log(service.name);
-		//Create the main div
-		var div = document.createElement("div");
-		div.className = "col-sm-4";
-		div.id = service.id;
-		
-		var panel = createPanelElement(service, {}, "default");
-		
-		div.appendChild(panel);
-		container.appendChild(div);
-	});
-}
-
-function refreshPanel() {
-	
-}
-
 function triggerRefresh(frequency) {
-    setTimeout(function() {
+    setInterval(function() {
 		AST.manager.services.forEach(function(service) {
 		    console.log(service);
-			service.request(function(success, data, error) {
-				
+			service.request(function(success, result, error) {
+				if(success) {
+					AST.data[result.serviceName] = result.serviceData;
+				} else {
+					console.log(error);
+				}
 			});
 		});
 	}, frequency);
 }
 
 $(document).ready(function () {
-	createServiceContainers();
     triggerRefresh(3000);
 });

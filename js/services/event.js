@@ -1,9 +1,10 @@
 var AST = AST || {};
 
 var eventService = {
-	name: "Basket",
-	id: "basket",
+	name: "Events",
+	id: "events",
 	request: function(callback) {
+		var me = this;
 		$.ajax({ url: "",
 				 dataType: "json",
 				 cache: false,
@@ -11,13 +12,12 @@ var eventService = {
 				 timeout: 5000
 				}).done(function(data, textStatus, jqXHR ) {
 					console.log("Success");
-					this.parse(data, callback);
+					me.parse(data, callback);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 					console.log("Error " + textStatus);
 					callback(false, errorThrown);
 				});
 	},
-	
 	parse: function(response, callback) {
 		
 	}
