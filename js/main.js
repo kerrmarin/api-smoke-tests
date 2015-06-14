@@ -1,11 +1,16 @@
 var AST = AST || {};
-
+AST.data = {};
+	
 function triggerRefresh(frequency) {
-    setTimeout(function() {
+    setInterval(function() {
 		AST.manager.services.forEach(function(service) {
 		    console.log(service);
-			service.request(function(success, data, error) {
-				
+			service.request(function(success, result, error) {
+				if(success) {
+					AST.data[result.serviceName] = result.serviceData;
+				} else {
+					console.log(error);
+				}
 			});
 		});
 	}, frequency);
