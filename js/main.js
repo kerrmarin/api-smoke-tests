@@ -7,7 +7,7 @@ function triggerRefresh(frequency) {
 		    console.log(service);
 			service.request(function(success, result, error) {
 				if(success) {
-					AST.data[result.serviceName] = result.serviceData;
+					AST.data[result.serviceName] = result;
 				} else {
 					console.log(error);
 				}
