@@ -11,7 +11,7 @@ Create your own service integration, parse the results you expect from the respo
 
 Services take the following pattern:
 
-```
+```javascript
 var AST = AST || {};
 
 var eventService = {
